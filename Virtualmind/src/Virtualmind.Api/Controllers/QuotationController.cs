@@ -15,15 +15,15 @@ namespace Virtualmind.Api.Controllers
         }
 
         [HttpGet("{currency}")]
-        public async Task<ActionResult<Quotation>> GetQuotation(string currency)
+        public async Task<IActionResult> GetQuotation(string currency)
         {
-            return await _quotationService.GetQuotation(currency);
+            return Ok(await _quotationService.GetQuotation(currency));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Quotation>>> GetQuotationAll()
+        public async Task<IActionResult> GetQuotationAll()
         {
-            return await _quotationService.GetAllQuotation();
+            return Ok(await _quotationService.GetAllQuotation());
         }
     }
 }
