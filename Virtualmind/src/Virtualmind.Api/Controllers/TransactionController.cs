@@ -25,20 +25,23 @@ namespace Virtualmind.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<Transaction>> GetQuotation(Transaction transaction)
         {
             transaction.Id = Guid.NewGuid().ToString();
             return await _transactionService.AddAsync(transaction);
         }
 
-        [HttpDelete("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [HttpGet("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            await _transactionService.DeleteAsync(id);
+            var transaction = await _transactionService.FindByIdAsync(id);
 
-            return NoContent();
+            return Ok(transaction);
         }
+
     }
 }
